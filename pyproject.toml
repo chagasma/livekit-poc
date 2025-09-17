@@ -4,7 +4,11 @@ version = "0.1.0"
 description = "livekit-poc"
 readme = "README.md"
 requires-python = ">=3.11.9"
-dependencies = []
+dependencies = [
+    "livekit-agents[cartesia,deepgram,openai,silero,turn-detector]~=1.2",
+    "livekit-plugins-noise-cancellation~=0.2",
+    "python-dotenv>=1.1.1",
+]
 
 [dependency-groups]
 dev = [

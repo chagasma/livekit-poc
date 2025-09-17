@@ -44,12 +44,3 @@ In console mode:
 
 - Press `Ctrl+B` to toggle between Text/Audio mode
 - Press `Q` to quit
-
-## Features
-
-- Speech-to-Text using Deepgram Nova-3
-- Large Language Model using OpenAI GPT-4o-mini
-- Text-to-Speech using Cartesia Sonic-2
-- Voice Activity Detection using Silero VAD
-- Noise cancellation and turn detection
-- Multilingual support

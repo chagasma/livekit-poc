@@ -2,13 +2,10 @@ from dotenv import load_dotenv
 from livekit import agents
 from livekit.agents import AgentSession, Agent, RoomInputOptions
 from livekit.plugins import (
-    openai,
-    cartesia,
-    deepgram,
+    google,
     noise_cancellation,
     silero,
 )
-from livekit.plugins.turn_detector.multilingual import MultilingualModel
 
 load_dotenv(".env")
 
@@ -20,11 +17,12 @@ class Assistant(Agent):
 
 async def entrypoint(ctx: agents.JobContext):
     session = AgentSession(
-        stt=deepgram.STT(model="nova-3", language="multi"),
-        llm=openai.LLM(model="gpt-4o-mini"),
-        tts=cartesia.TTS(model="sonic-2", voice="f786b574-daa5-4673-aa0c-cbe3e8534c02"),
+        llm=google.beta.realtime.RealtimeModel(
+            model="gemini-2.5-flash-preview-native-audio-dialog",
+            voice="Zephyr",
+            instructions="Você é uma assistente de IA prestativa."
+        ),
         vad=silero.VAD.load(),
-        turn_detection=MultilingualModel(),
     )
 
     await session.start(

@@ -10,16 +10,7 @@ A proof of concept for LiveKit Voice AI Agent implementation.
 uv sync
 ```
 
-2. Configure environment variables in `.env` file:
-
-```bash
-DEEPGRAM_API_KEY=your_deepgram_key
-OPENAI_API_KEY=your_openai_key
-CARTESIA_API_KEY=your_cartesia_key
-LIVEKIT_API_KEY=your_livekit_key
-LIVEKIT_API_SECRET=your_livekit_secret
-LIVEKIT_URL=wss://your-url.livekit.cloud
-```
+2. Configure environment variables in `.env` file based on `.env.example`.
 
 3. Download model files (one-time setup):
 

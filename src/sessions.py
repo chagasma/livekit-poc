@@ -8,12 +8,14 @@ from livekit.plugins import (
 
 
 class SessionFactory:
+    instructions: str = "Você é uma assistente de IA prestativa."
+
     SESSIONS = {
         "realtime": {
             "llm": lambda: google.beta.realtime.RealtimeModel(
                 model="gemini-2.5-flash-preview-native-audio-dialog",
                 voice="Zephyr",
-                instructions="Você é uma assistente de IA prestativa."
+                instructions=SessionFactory.instructions,
             ),
             "vad": lambda: silero.VAD.load(),
         },
@@ -23,22 +25,22 @@ class SessionFactory:
             "tts": lambda: google.beta.GeminiTTS(
                 model="gemini-2.5-flash-preview-tts",
                 voice_name="Zephyr",
-                instructions="Você é uma assistente de IA prestativa.",
+                instructions=SessionFactory.instructions,
             ),
             "vad": lambda: silero.VAD.load(),
             "turn_detection": lambda: "multilingual"
         }
     }
-    
+
     @staticmethod
     def create_session(session_name: str) -> AgentSession:
         if session_name not in SessionFactory.SESSIONS:
             raise ValueError(f"Session '{session_name}' not found. Available: {list(SessionFactory.SESSIONS.keys())}")
-        
+
         config = SessionFactory.SESSIONS[session_name]
         kwargs = {}
-        
+
         for key, factory in config.items():
             kwargs[key] = factory()
-        
+
         return AgentSession(**kwargs)

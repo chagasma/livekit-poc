@@ -11,7 +11,7 @@ from src.prompts import INSTRUCTIONS
 
 class SessionFactory:
     SESSIONS = {
-        "realtime": {
+        "base-native-audio": {
             "llm": lambda: google.beta.realtime.RealtimeModel(
                 model="gemini-2.5-flash-preview-native-audio-dialog",
                 voice="Zephyr",
@@ -19,7 +19,7 @@ class SessionFactory:
             ),
             "vad": lambda: silero.VAD.load(),
         },
-        "stt_llm_tts": {
+        "base-stt_llm_tts": {
             "stt": lambda: deepgram.STT(model="nova-3", language="multi"),
             "llm": lambda: openai.LLM(model="gpt-4o-mini"),
             "tts": lambda: google.beta.GeminiTTS(

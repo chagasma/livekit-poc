@@ -6,7 +6,7 @@ from livekit.plugins import (
     silero,
 )
 
-from src.prompts import INSTRUCTIONS
+from prompts import INSTRUCTIONS
 
 
 class SessionFactory:

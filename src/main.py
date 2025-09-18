@@ -3,7 +3,7 @@ from livekit import agents
 from livekit.agents import Agent, RoomInputOptions
 from livekit.plugins import noise_cancellation
 from sessions import SessionFactory
-from src.prompts import INSTRUCTIONS
+from prompts import INSTRUCTIONS
 
 load_dotenv(".env")
 

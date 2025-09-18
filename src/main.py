@@ -1,14 +1,8 @@
 from dotenv import load_dotenv
 from livekit import agents
-from livekit.agents import AgentSession, Agent, RoomInputOptions
-from livekit.plugins import (
-    openai,
-    google,
-    deepgram,
-    noise_cancellation,
-    silero,
-)
-from livekit.plugins.turn_detector.multilingual import MultilingualModel
+from livekit.agents import Agent, RoomInputOptions
+from livekit.plugins import noise_cancellation
+from sessions import SessionFactory
 
 load_dotenv(".env")
 
@@ -19,27 +13,7 @@ class Assistant(Agent):
 
 
 async def entrypoint(ctx: agents.JobContext):
-    if 1 > -1:
-        session = AgentSession(
-            llm=google.beta.realtime.RealtimeModel(
-                model="gemini-2.5-flash-preview-native-audio-dialog",
-                voice="Zephyr",
-                instructions="Você é uma assistente de IA prestativa."
-            ),
-            vad=silero.VAD.load(),
-        )
-    else:
-        session = AgentSession(
-            stt=deepgram.STT(model="nova-3", language="multi"),
-            llm=openai.LLM(model="gpt-4o-mini"),
-            tts=google.beta.GeminiTTS(
-                model="gemini-2.5-flash-preview-tts",
-                voice_name="Zephyr",
-                instructions="Você é uma assistente de IA prestativa.",
-            ),
-            vad=silero.VAD.load(),
-            turn_detection=MultilingualModel()
-        )
+    session = SessionFactory.create_session("realtime")
 
     await session.start(
         room=ctx.room,

@@ -1,0 +1,1 @@
+INSTRUCTIONS: str = "Você é uma assistente de IA prestativa."

@@ -6,16 +6,16 @@ from livekit.plugins import (
     silero,
 )
 
+from src.prompts import INSTRUCTIONS
+
 
 class SessionFactory:
-    instructions: str = "Você é uma assistente de IA prestativa."
-
     SESSIONS = {
         "realtime": {
             "llm": lambda: google.beta.realtime.RealtimeModel(
                 model="gemini-2.5-flash-preview-native-audio-dialog",
                 voice="Zephyr",
-                instructions=SessionFactory.instructions,
+                instructions=INSTRUCTIONS,
             ),
             "vad": lambda: silero.VAD.load(),
         },
@@ -25,7 +25,7 @@ class SessionFactory:
             "tts": lambda: google.beta.GeminiTTS(
                 model="gemini-2.5-flash-preview-tts",
                 voice_name="Zephyr",
-                instructions=SessionFactory.instructions,
+                instructions=INSTRUCTIONS,
             ),
             "vad": lambda: silero.VAD.load(),
             "turn_detection": lambda: "multilingual"

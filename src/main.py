@@ -3,13 +3,14 @@ from livekit import agents
 from livekit.agents import Agent, RoomInputOptions
 from livekit.plugins import noise_cancellation
 from sessions import SessionFactory
+from src.prompts import INSTRUCTIONS
 
 load_dotenv(".env")
 
 
 class Assistant(Agent):
     def __init__(self) -> None:
-        super().__init__(instructions="Você é uma assistente de IA prestativa.")
+        super().__init__(instructions=INSTRUCTIONS)
 
 
 async def entrypoint(ctx: agents.JobContext):

@@ -44,7 +44,7 @@ class SessionFactory:
             "turn_detection": lambda: MultilingualModel()
         },
         "test-openai-tts": {
-            "stt": lambda: deepgram.STT(model="nova-3", language="multi"),
+            "stt": lambda: deepgram.STT(model="nova-3", language="pt"),
             "llm": lambda: openai.LLM(model="gpt-4o-mini"),
             "tts": lambda: openai.TTS(
                 model="gpt-4o-mini-tts",
@@ -53,7 +53,18 @@ class SessionFactory:
             ),
             "vad": lambda: silero.VAD.load(),
             "turn_detection": lambda: MultilingualModel()
-        }
+        },
+        "test-gpt-4o-transcribe-stt": {
+            "stt": lambda: openai.STT(model="gpt-4o-transcribe"),
+            "llm": lambda: openai.LLM(model="gpt-4o-mini"),
+            "tts": lambda: google.beta.GeminiTTS(
+                model="gemini-2.5-flash-preview-tts",
+                voice_name="Zephyr",
+                instructions=INSTRUCTIONS,
+            ),
+            "vad": lambda: silero.VAD.load(),
+            "turn_detection": lambda: MultilingualModel()
+        },
     }
 
     @staticmethod

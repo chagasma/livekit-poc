@@ -1,0 +1,15 @@
+services:
+  livekit-agent:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      - LIVEKIT_URL=${LIVEKIT_URL}
+      - LIVEKIT_API_KEY=${LIVEKIT_API_KEY}
+      - LIVEKIT_API_SECRET=${LIVEKIT_API_SECRET}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DEEPGRAM_API_KEY=${DEEPGRAM_API_KEY}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - ELEVEN_API_KEY=${ELEVEN_API_KEY}
+    command: ["uv", "run", "src/main.py", "dev"]
+    restart: unless-stopped

@@ -1,3 +1,4 @@
+import sys
 from dotenv import load_dotenv
 from livekit import agents
 from livekit.agents import Agent, RoomInputOptions
@@ -13,8 +14,21 @@ class Assistant(Agent):
         super().__init__(instructions=INSTRUCTIONS)
 
 
+def get_session_name():
+    session_name = "base-native-audio"
+    
+    for i, arg in enumerate(sys.argv):
+        if arg.startswith('-') and not arg in ['dev', 'console', 'download-files', 'start']:
+            session_name = arg.lstrip('-')
+            sys.argv.pop(i)
+            break
+    
+    return session_name
+
+
 async def entrypoint(ctx: agents.JobContext):
-    session = SessionFactory.create_session("test-gpt-4o-transcribe-stt")
+    session_name = get_session_name()
+    session = SessionFactory.create_session(session_name)
 
     await session.start(
         room=ctx.room,

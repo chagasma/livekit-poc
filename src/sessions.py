@@ -36,8 +36,9 @@ class SessionFactory:
             "stt": lambda: deepgram.STT(model="nova-3", language="multi"),
             "llm": lambda: openai.LLM(model="gpt-4o-mini"),
             "tts": lambda: elevenlabs.TTS(
-                model="flash",
-                voice="echo"
+                model="eleven_flash_v2_5",
+                voice_id="EXAVITQu4vr4xnSDxMaL",
+                language="pt"
             ),
             "vad": lambda: silero.VAD.load(),
             "turn_detection": lambda: MultilingualModel()

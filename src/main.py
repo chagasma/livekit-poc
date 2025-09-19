@@ -14,7 +14,7 @@ class Assistant(Agent):
 
 
 async def entrypoint(ctx: agents.JobContext):
-    session = SessionFactory.create_session("test-elevenlabs-tts")
+    session = SessionFactory.create_session("test-openai-tts")
 
     await session.start(
         room=ctx.room,

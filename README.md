@@ -92,6 +92,7 @@ uv run src/main.py console -base-native-audio
 - Press `Ctrl+B` to toggle between Text/Audio mode
 - Press `Q` to quit
 
+
 ### 3. Docker Mode
 
 Run the agent in a containerized environment:
@@ -118,6 +119,7 @@ The Docker setup:
 # Clean cache and temporary files
 make clean
 ```
+
 
 ## Testing & Documentation
 

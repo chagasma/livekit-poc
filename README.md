@@ -2,48 +2,124 @@
 
 A proof of concept for LiveKit Voice AI Agent implementation.
 
-## Setup
+## Quick Start
 
-1. Install dependencies:
+This project includes a Makefile for simplified command execution. Run `make help` to see all available commands.
+
+### Basic Setup
 
 ```bash
-uv sync
+# Install dependencies and download models
+make setup
 ```
 
-2. Configure environment variables in `.env` file based on `.env.example`.
-
-3. Download model files (one-time setup):
+### Running the Agent
 
 ```bash
+# Development mode (default session: base-native-audio)
+make dev
+
+# Console mode for local testing
+make console
+
+# With specific session
+make dev SESSION=test-elevenlabs-tts
+
+# Using Docker
+make docker
+```
+
+## Detailed Setup
+
+### 1. Environment Configuration
+
+Configure environment variables in `.env` file based on `.env.example`:
+
+```bash
+cp .env.example .env
+# Edit .env with your API keys
+```
+
+### 2. Manual Installation (alternative to `make setup`)
+
+```bash
+# Install dependencies
+uv sync
+
+# Download model files (one-time setup)
 uv run src/main.py download-files
 ```
 
-## Running the Agent
+## Running Options
 
-### Development Mode
+### Available Sessions
 
-Runs the agent and connects to LiveKit Cloud, waiting for web/mobile app connections:
+- `base-native-audio` (default) - Basic audio processing
+- `base-stt_llm_tts` - Full STT/LLM/TTS pipeline
+- `test-elevenlabs-tts` - ElevenLabs TTS testing
+- `test-openai-tts` - OpenAI TTS testing
+- `test-gpt-4o-transcribe-stt` - GPT-4o transcription testing
+
+### 1. Development Mode
+
+Connects to LiveKit Cloud, waiting for web/mobile app connections:
 
 ```bash
-uv run src/main.py dev
+# Using Makefile (recommended)
+make dev SESSION=base-native-audio
+
+# Direct command
+uv run src/main.py dev -base-native-audio
 ```
 
-### Console Mode
+### 2. Console Mode
 
-Runs the agent locally with terminal interface for testing. Requires PortAudio for microphone input:
+Local testing with terminal interface. Requires PortAudio for microphone input:
 
 ```bash
-# Install PortAudio first (Ubuntu/Debian):
+# Install PortAudio first (Ubuntu/Debian)
 sudo apt install portaudio19-dev
 
-# Run console mode:
-uv run src/main.py console
+# Using Makefile (recommended)
+make console SESSION=base-native-audio
+
+# Direct command
+uv run src/main.py console -base-native-audio
 ```
 
-In console mode:
+**Console Mode Controls:**
 
 - Press `Ctrl+B` to toggle between Text/Audio mode
 - Press `Q` to quit
+
+
+### 3. Docker Mode
+
+Run the agent in a containerized environment:
+
+```bash
+# Using Makefile (recommended)
+make docker
+
+# Direct Docker commands
+cd docker
+docker-compose up --build
+```
+
+The Docker setup:
+
+- Uses UV for fast Python package management
+- Pre-downloads all required models
+- Runs as non-root user for security
+- Includes all necessary dependencies
+
+## Maintenance
+
+```bash
+# Clean cache and temporary files
+make clean
+```
+
 
 ## Testing & Documentation
 

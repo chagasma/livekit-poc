@@ -14,7 +14,7 @@ class Assistant(Agent):
 
 
 async def entrypoint(ctx: agents.JobContext):
-    session = SessionFactory.create_session("base-native-audio")
+    session = SessionFactory.create_session("test-elevenlabs-tts")
 
     await session.start(
         room=ctx.room,

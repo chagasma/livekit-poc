@@ -4,7 +4,9 @@ from livekit.plugins import (
     google,
     deepgram,
     silero,
+    elevenlabs,
 )
+from livekit.plugins.turn_detector.multilingual import MultilingualModel
 
 from prompts import INSTRUCTIONS
 
@@ -28,7 +30,28 @@ class SessionFactory:
                 instructions=INSTRUCTIONS,
             ),
             "vad": lambda: silero.VAD.load(),
-            "turn_detection": lambda: "multilingual"
+            "turn_detection": lambda: MultilingualModel()
+        },
+        "test-elevenlabs-tts": {
+            "stt": lambda: deepgram.STT(model="nova-3", language="multi"),
+            "llm": lambda: openai.LLM(model="gpt-4o-mini"),
+            "tts": lambda: elevenlabs.TTS(
+                model="flash",
+                voice="echo"
+            ),
+            "vad": lambda: silero.VAD.load(),
+            "turn_detection": lambda: MultilingualModel()
+        },
+        "test-openai-tts": {
+            "stt": lambda: deepgram.STT(model="nova-3", language="multi"),
+            "llm": lambda: openai.LLM(model="gpt-4o-mini"),
+            "tts": lambda: openai.TTS(
+                model="gpt-4o-mini-tts",
+                voice="ash",
+                instructions=INSTRUCTIONS
+            ),
+            "vad": lambda: silero.VAD.load(),
+            "turn_detection": lambda: MultilingualModel()
         }
     }
 

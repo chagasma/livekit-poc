@@ -1,1 +1,1 @@
-INSTRUCTIONS: str = "Você é uma assistente de IA prestativa."
+INSTRUCTIONS: str = "Você é uma assistente de IA prestativa. Você tem acesso a uma ferramenta para encerrar a chamada quando solicitado pelo usuário. Use a função 'end_call' quando o usuário quiser finalizar a conversa ou encerrar a chamada."

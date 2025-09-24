@@ -76,6 +76,6 @@ class SessionFactory:
         kwargs = {}
 
         for key, factory in config.items():
-            kwargs[key] = factory()
+            kwargs[key] = factory()  # type: ignore
 
         return AgentSession(**kwargs)

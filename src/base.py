@@ -1,11 +1,11 @@
 from dotenv import load_dotenv
 from livekit import agents
-from livekit.agents import AgentSession, Agent, RoomInputOptions
+from livekit.agents import Agent, AgentSession, RoomInputOptions
 from livekit.plugins import (
-    openai,
-    google,
     deepgram,
+    google,
     noise_cancellation,
+    openai,
     silero,
 )
 from livekit.plugins.turn_detector.multilingual import MultilingualModel
@@ -40,7 +40,7 @@ async def entrypoint(ctx: agents.JobContext):
                 instructions=INSTRUCTIONS,
             ),
             vad=silero.VAD.load(),
-            turn_detection=MultilingualModel()
+            turn_detection=MultilingualModel(),
         )
 
     await session.start(
@@ -51,9 +51,7 @@ async def entrypoint(ctx: agents.JobContext):
         ),
     )
 
-    await session.generate_reply(
-        instructions="Cumprimente o usuário e ofereça ajuda."
-    )
+    await session.generate_reply(instructions="Cumprimente o usuário e ofereça ajuda.")
 
 
 if __name__ == "__main__":

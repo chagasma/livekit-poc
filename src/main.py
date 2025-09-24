@@ -3,7 +3,13 @@ import sys
 
 from dotenv import load_dotenv
 from livekit import agents
-from livekit.agents import Agent, RoomInputOptions, RunContext, function_tool, get_job_context
+from livekit.agents import (
+    Agent,
+    RoomInputOptions,
+    RunContext,
+    function_tool,
+    get_job_context,
+)
 from livekit.plugins import noise_cancellation
 
 from prompts import INSTRUCTIONS
@@ -23,21 +29,21 @@ class Assistant(Agent):
         """Encerra a chamada atual."""
         logger.info("end_call: Iniciando processo de encerramento da chamada")
         try:
-            # Primeiro desconecta da room se disponível
             if hasattr(context, "room") and context.room:
                 logger.info("end_call: Desconectando da room")
                 await context.room.disconnect()
                 logger.info("end_call: Room desconectada com sucesso")
-            
-            # Obtém o job context e chama shutdown
+
             try:
                 job_ctx = get_job_context()
                 logger.info("end_call: Chamando shutdown do job context")
                 job_ctx.shutdown(reason="Chamada encerrada pelo usuário")
                 logger.info("end_call: Shutdown do job context executado")
             except Exception as job_error:
-                logger.warning(f"end_call: Não foi possível chamar shutdown do job context: {job_error}")
-            
+                logger.warning(
+                    f"end_call: Não foi possível chamar shutdown do job context: {job_error}"
+                )
+
             logger.info("end_call: Chamada encerrada com sucesso")
             return {"status": "success", "message": "Chamada encerrada com sucesso"}
         except Exception as e:
@@ -66,7 +72,7 @@ async def entrypoint(ctx: agents.JobContext):
     logger.info("entrypoint: Iniciando nova sessão")
     session_name = get_session_name()
     logger.info(f"entrypoint: Usando sessão '{session_name}'")
-    
+
     session = SessionFactory.create_session(session_name)
 
     logger.info("entrypoint: Iniciando sessão do agente")

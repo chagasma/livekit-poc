@@ -22,7 +22,7 @@ class Assistant(Agent):
 
 async def entrypoint(ctx: agents.JobContext):
     if 1 > -1:
-        session = AgentSession(
+        session: AgentSession = AgentSession(
             llm=google.beta.realtime.RealtimeModel(
                 model="gemini-2.5-flash-preview-native-audio-dialog",
                 voice="Zephyr",

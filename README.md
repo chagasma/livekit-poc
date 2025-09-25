@@ -16,14 +16,11 @@ make setup
 ### Running the Agent
 
 ```bash
-# Development mode (default session: base-native-audio)
+# Development mode
 make dev
 
 # Console mode for local testing
 make console
-
-# With specific session
-make dev SESSION=test-elevenlabs-tts
 
 # Using Docker
 make docker
@@ -52,13 +49,7 @@ uv run src/main.py download-files
 
 ## Running Options
 
-### Available Sessions
-
-- `base-native-audio` (default) - Basic audio processing
-- `base-stt_llm_tts` - Full STT/LLM/TTS pipeline
-- `test-elevenlabs-tts` - ElevenLabs TTS testing
-- `test-openai-tts` - OpenAI TTS testing
-- `test-gpt-4o-transcribe-stt` - GPT-4o transcription testing
+The agent uses the `base-stt_llm_tts` session configuration. To change sessions, edit the `session_name` variable in `src/main.py`.
 
 ### 1. Development Mode
 
@@ -66,10 +57,10 @@ Connects to LiveKit Cloud, waiting for web/mobile app connections:
 
 ```bash
 # Using Makefile (recommended)
-make dev SESSION=base-native-audio
+make dev
 
 # Direct command
-uv run src/main.py dev -base-native-audio
+uv run src/main.py dev
 ```
 
 ### 2. Console Mode
@@ -81,17 +72,16 @@ Local testing with terminal interface. Requires PortAudio for microphone input:
 sudo apt install portaudio19-dev
 
 # Using Makefile (recommended)
-make console SESSION=base-native-audio
+make console
 
 # Direct command
-uv run src/main.py console -base-native-audio
+uv run src/main.py console
 ```
 
 **Console Mode Controls:**
 
 - Press `Ctrl+B` to toggle between Text/Audio mode
 - Press `Q` to quit
-
 
 ### 3. Docker Mode
 
@@ -119,7 +109,6 @@ The Docker setup:
 # Clean cache and temporary files
 make clean
 ```
-
 
 ## Testing & Documentation
 

@@ -55,13 +55,10 @@ def get_session_name():
 
 
 async def entrypoint(ctx: agents.JobContext):
-    logger.info("entrypoint: Iniciando nova sessão")
-    session_name = get_session_name()
-    logger.info(f"entrypoint: Usando sessão '{session_name}'")
+    logger.info("Iniciando nova sessão")
+    session = SessionFactory.create_session(get_session_name())
 
-    session = SessionFactory.create_session(session_name)
-
-    logger.info("entrypoint: Iniciando sessão do agente")
+    logger.info("Iniciando sessão do agente")
     await session.start(
         room=ctx.room,
         agent=Assistant(),
@@ -70,9 +67,7 @@ async def entrypoint(ctx: agents.JobContext):
         ),
     )
 
-    logger.info("entrypoint: Gerando cumprimento inicial")
     await session.generate_reply(instructions="Cumprimente o usuário e ofereça ajuda.")
-    logger.info("entrypoint: Sessão iniciada com sucesso")
 
 
 if __name__ == "__main__":

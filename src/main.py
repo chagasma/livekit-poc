@@ -1,5 +1,4 @@
 import logging
-import sys
 
 from dotenv import load_dotenv
 from livekit import agents
@@ -52,20 +51,7 @@ class Assistant(Agent):
 
 
 def get_session_name():
-    session_name = "base-stt_llm_tts"
-
-    for i, arg in enumerate(sys.argv):
-        if arg.startswith("-") and arg not in [
-            "dev",
-            "console",
-            "download-files",
-            "start",
-        ]:
-            session_name = arg.lstrip("-")
-            sys.argv.pop(i)
-            break
-
-    return session_name
+    return "base-stt_llm_tts"
 
 
 async def entrypoint(ctx: agents.JobContext):

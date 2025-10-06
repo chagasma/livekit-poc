@@ -25,7 +25,6 @@ class Assistant(Agent):
 
     @function_tool()
     async def end_call(self, context: RunContext) -> dict:
-        """Encerra a chamada atual."""
         logger.info("end_call: Iniciando processo de encerramento da chamada")
         try:
             if hasattr(context, "room") and context.room:

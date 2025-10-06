@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from livekit import agents
 from livekit.agents import (
     Agent,
+    MetricsCollectedEvent,
     RoomInputOptions,
     RunContext,
     function_tool,
@@ -11,6 +12,7 @@ from livekit.agents import (
 )
 from livekit.plugins import noise_cancellation
 
+from metrics import MetricsCollector
 from prompts import INSTRUCTIONS
 from sessions import SessionFactory
 
@@ -57,6 +59,13 @@ async def entrypoint(ctx: agents.JobContext):
     logger.info("Iniciando nova sessão")
     session = SessionFactory.create_session(get_session_name())
 
+    metrics_collector = MetricsCollector()
+
+    @session.on("metrics_collected")
+    def on_metrics_collected(ev: MetricsCollectedEvent):
+        metrics_collector.log_metrics(ev.metrics)
+        metrics_collector.calculate_total_latency(ev.metrics)
+
     logger.info("Iniciando sessão do agente")
     await session.start(
         room=ctx.room,
@@ -67,6 +76,8 @@ async def entrypoint(ctx: agents.JobContext):
     )
 
     await session.generate_reply(instructions="Cumprimente o usuário e ofereça ajuda.")
+
+    ctx.add_shutdown_callback(lambda: metrics_collector.get_usage_summary())
 
 
 if __name__ == "__main__":
